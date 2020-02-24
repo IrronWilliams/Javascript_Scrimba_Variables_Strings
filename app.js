@@ -1,0 +1,1 @@
+console.log('This is example of using an external js file to message user. Hi user!')
