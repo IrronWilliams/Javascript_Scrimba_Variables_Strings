@@ -5,9 +5,9 @@ var message = 'hello world again'
 There is a difference between these statements. 
 running the code for message (line1) will not return an error. a value called message was created but was not created as a variable (line2)
 message was added to the Global Object. The Global Object can be accessed anywhere within the application. The Global Object
-is different via the environment JavaScript runs in. In the browser, reference to Global Object widow. Even though we can access message 
+is different via the environment JavaScript runs in. In the browser, reference to Global Object is widow. Even though we can access message 
 like its a variable, it is not a variable. It is actually a property of the Global Object. This can be concerning/confusing if I created
-a variable called message. How would if I am using the property of the Global Object or the local variable? 
+a variable called message. 
 */
 
 console.log(window)  //returns window
@@ -33,7 +33,7 @@ thrown. Type 'use strict' on 1st line to change from normal to strict mode.
 /*USING STRICT MODE, HOISTING, VALUE OF LET, CONST */
 "use strict"
 
-message = "hello world" // because of strict mode, will immediately throw error ReferenceError: message is not defined. 
+message = "hello world" // because of strict mode, JavaScript will immediately throw error ReferenceError: message is not defined. 
 
 /*Normal mode allowed message to be added to the Global Object. Strict mode will prevent mutating/changing Global Object or over-riding 
 existing properties on it. */
@@ -64,10 +64,10 @@ age = 36 //reassign value
 
 const age //declaring a const variable w/o initalizing it will result in error. SyntaxError: Missing initializer in const declaration
 const age = 26 //need to be initialized when declared and cannot be changed. 
-const age = 37 //Attempting to change reassign after declaration.
+const age = 37 //Attempting to change reassign after declaration will result in an error
 
 best to use const to assign variables because let and var can be reassigned at anytime.  using const signals to others that variables 
-should not be changed at anytime. Const allows variables to be less unpredictable and not subject to change. const works best with 
+should not be changed at ANYTIME. Const allows variables to be less unpredictable and not subject to change. const works best with 
 primitive data types, numbers, strings, booleans. const does have vulnerability when working with non primitive data types like objects.
 
 const originalPrice = 50;
@@ -80,7 +80,7 @@ console.log(salePrice);
 */
 
 'use strict'
-var age //variable declaration w/o 
+var age //variable declaration w/o value
 console.log(age) //undefined 
 age = 26  //assigning value 
 
@@ -129,20 +129,22 @@ console.log(price)
 
 /* VARIABLE SHADOWING
 Variable shadowing occurs when one variable overrides other variables with the same name that belong to a wider scope. 
-In this example, the price variable declared in the if block shadows and overrides the other price variable (price = 20).  When isSale is true,
-the original price of 20 is also being set (shadowing) to 18. The original price should remain 20. The problem is the new sales price is 
-not just living inside the if block, the sales price is also living outside of its context of the if block and affecting the other price
-variable. var completely ignores the curly brackets/code block of the if statement, and as a result the original price variable is changed
-to the sales price instead of creating a new variable within the code block of if statement. 
+In this example, the price variable declared in the if block shadows and overrides the other price variable (price = 20).  
+When isSale is true, the original price of 20 is also being set (shadowing) to 18. The original price should remain 20. 
+The problem is the new sales price is not just living inside the if block, the new sales price is also living outside of its context of 
+the if block and affecting the other price variable. var completely ignores the curly brackets/code block of the if statement, 
+and as a result the original price variable is changed to the sales price instead of creating a new variable within the code block of 
+if statement. 
 
-To address this issue with var, use let or const as they are block-scoped. This means any variable created within a block, ie if statement,
-does not exist and cannot be accessed outside of the block. The variable will not exist outside of the outer scope.  
+To address this issue with var, use let or const as they are block-scoped. This means any variable created within a block, ie if 
+statement, does not exist outside its scope and cannot be accessed outside of the block. The variable will not exist outside in the 
+outer scope.  
 */
 var price = 20
 var isSale = true
 
 // variable shadowing
-if (isSale) { //don't need to say if (isSale) == true
+if (isSale) { //don't need to say if (isSale) == true.  if (isSale) will be evaluated as either true or false
   // discount price of product
   var price = 20 - 2
   // do something 
@@ -160,14 +162,16 @@ if (isSale) {
 console.log('price', price) //returns price, 20
 
 /* THE PLUS OPERATOR & TEMPLATE LITERALS
-The + operator can be used on string variables. If one of the variables is a string and the other is not, the + operator converts the other
-variable to a string and concatenates the 2 variables. So using the + operator on integer 12 and string 12 will result in:
-12 + '12'. integer 12 will be converted to string 12 and the two will be concatenated. '12'+'12' = 1212. The + operator technically can be used
-on string variables; but not always the best solution.  In this example, will need to place an empty space after Hi so that the words don't run 
-together. You can sometime forget to place a space, especially if working with many string variables. An alternative approach is a template literal.
+The + operator can be used on string variables. If one of the variables is a string and the other is not, the + operator converts the 
+other variable to a string and concatenates the 2 variables. So using the + operator on integer 12 and string 12 will result in:
+12 + '12'. integer 12 will be converted to string 12 and the two will be concatenated. '12'+'12' = 1212. 
 
-Template literals uses back-ticks and a process called string interpretlation, which 'puts in' the variable value in the string. Can also use template
-literals to address strings with double and singe quotes: 
+The + operator technically can be used on string variables; but is not always the best solution.  In this example, will need to place an 
+empty space after Hi so that the words don't run together. You can sometimes forget to place a space, especially if working with many 
+string variables. An alternative approach is a template literal.
+
+Template literals uses back-ticks and a process called string interpretlation, which 'puts in' the variable value in the string. Can also 
+use template literals to address strings with double and singe quotes: 
 
 `I'm a string`;
 `He said, "I am string."`;
@@ -209,7 +213,7 @@ const message = `${mySon}, I am your ${parentalStatus}`
 console.log(message)
 
 /* VARIABLE NAMES CONVENTIONS
-Variable Names
+Variable Names are/should be:
 Case Sensitive; casing matters
 Self Descriptive; know what a variable holds based on its name, and have an idea of what data type variable should hold. 
 Mostly all variables will use camel case convention. 
@@ -239,10 +243,9 @@ To inform developers that a variable should not change, use a variable with ALL 
 separate words with under score:
 
 const COLOR_RED = '#f00';
-
 */
 
-//reads like sentence because of variable name. isModalVisible is true then do something. 
+//statement reads like a sentence because of variable name. if isModalVisible is true then do something. 
 let isModalVisible = true
 if (isModalVisible) {
   // do something  
