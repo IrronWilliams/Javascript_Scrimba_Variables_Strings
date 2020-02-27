@@ -196,7 +196,7 @@ if (0) {
 
 1. Avoid direct comparisons in conditionals
 2. Use triple equals === (strict equals operator).  === does not allow type conversion
-
+3. Convert to real Boolean values where needed
 */
 
 //trying to check if we do not have a username
@@ -218,4 +218,34 @@ console.log('no user');
 const username = undefined;
 if (!username) {  //using the logical not operator will work with any falsy value. this will still return no user. 
   console.log('no user');
+}
+
+/*You would expect to get not equals returned from this program because null and undefined are 2 different data types. However, when 
+you run this code, equals is returned. This is because the loose equal operator, ==, is coercing these values so that they are viewed as 
+having the same data type. */
+if (null == undefined) {
+    console.log('equals'); //returns equals
+  } else {
+    console.log('not equals');
+  }
+
+//using the strict equals operator will return the expected value not equals because it will not allow coercing of values, thus they will be recognized as different. 
+if (null === undefined) {
+console.log('equals');
+} else {
+console.log('not equals'); //returns not equals. 
+}
+
+//in some cases may need to convert to real Boolean values. this program will unexpectedly return not equals. 
+if (NaN === NaN) {
+    console.log('equal')
+} else {
+    console.log('not equals') //returns not equals
+}
+
+//need to explicity convert Nan to a Boolean value to return expected results. 
+if (Boolean(NaN) === Boolean(NaN)) {
+    console.log('equal') //returns equal
+} else {
+    console.log('not equals')
 }
