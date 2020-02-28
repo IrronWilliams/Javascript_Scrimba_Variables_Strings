@@ -363,3 +363,135 @@ const age = 20
 let allowedAccess
 allowedAccess = age >= 18 ? true: false
 console.log("allowedAccess: ", allowedAccess)
+
+/*SHORT CIRCUITING 
+Approach level of simplification */
+
+//program will evaluate response as true or false (truthy/falsy) and print either response user provided or guest.  
+const response = "Reed" 
+let username 
+if (response) {
+  username = response 
+} else {
+  username = "guest" 
+}
+console.log(username) 
+
+//converting to ternary.  evaluate response, if response is true update username with response variable, if false update username with 'guest'
+const username = response ? response : 'guest'
+
+/*can use the or operator || to further simplify code. With ||, as soon as of its operands evaluates to true, it will be returned. 
+if the 1st operand evaluates to true, it will stop at the 1st operand and return it. 
+
+whenever  or || has a condition that resolves as true, either the 1st operand or second operand, its going to return that value. This 
+also applies to truthy and falsy values*/
+const result = true || false  //the 1st operand is true and will be returned and put in the result variable. 
+const result = false || true  //the 2nd operand is true and will be returned and put in the result variable.  
+const result = '' || 'Reed'  //the 2nd operand is truthy and 'Reed' will be returned and put in the result variable.
+const result = 'Reed' || ''  //the 1st operand is truthy and 'Reed' will be returned and put in the result variable.
+
+/*using short-circuiting to rewrite ternary to something more concise (removing the duplicate references to response)
+if username is truthy return response and put in username. if username falsy return guest and put in username */
+const username = response || 'guest' 
+
+/*program will determine if username is valid by evaluating if response AND email has been verified. Username is valid if both
+username and email are true(truthy). if username and email are both not true, then user will be provided with a guest username */
+const response = "Reed" 
+const isEmailVerified = true 
+let username 
+if (response) {
+  if (isEmailVerified) {
+    username = response 
+  }  
+} else {
+  username = "guest" 
+}
+console.log(username) 
+
+/*the and && logical operator allows me to evaluate multiple conditions. when the && operator sees a true or truthy value, it will 
+skip the true/truthy value and go to the next operand. if 1st operand is false, && operator will immediately stop at the 1st false operator  */
+const result = true && false  //1st operand is true. && operator skips over true and returns false and updates result with false
+const result = false && true  //1st operand is false. && operator will stop at the 1st false, return false and updates result with false
+
+/*
+//1st operand is skipped because it is true. && operator goes to next operand and returns the string variable. the email address is 
+then added to the email variable. So only if their email is verified will it be put in the email variable.  
+*/
+const isEmailVerified = true 
+const email = isEmailVerified && 'reed@gmail.com'  
+
+const isEmailVerified = false 
+const email = isEmailVerified && 'reed@gmail.com'  //false will be put in email variable because isEmailVerified is false 
+
+/*instead of having multiple if conditions, can join multiple conditions with the && operator.
+in 1st operand, response is true/truthy, && moves to next operand and evaluates it to be true.  
+if either the 1st or 2nd operand is false/falsy, guest will be returned and put in username
+
+Short-circuiting using && (and) operator
+ */
+const response = "Reed" 
+const isEmailVerified = true 
+const username = response && isEmailVerified || "guest"  //username will be updated with true because isEmailVerified is true
+
+const response = "Reed" 
+const isEmailVerified = false 
+const username = response && isEmailVerified || "guest"  //username will be updated with guest because isEmailVerified is false
+
+const response = "Reed" 
+const isEmailVerified = true 
+const username = isEmailVerified && response || "guest"  /*username will be updated with 'Reed". changed the order of operands so that
+                                                          isEmailVerified will be evaluated as true, so && moves on to response
+                                                          response is returned and username is updated with response value */
+
+/*Short-circuiting with || and  && operators can be very powerful tools. But be aware of operator precedence  which is the order in which  
+the operators are performed. && has a higher operator precedence than ||. But if i want to specify the priority of the operand, 
+i can wrap in parenthesis. Parenthesis have the highest precedence of all operators in JavaScript */
+const username = isEmailVerified && response || "guest"  //conditional with && will be executed before conditional with ||
+const username = isEmailVerified && (response || "guest")  //conditional with || will be evaluated 1st because wrapped in ()
+
+/* Challenge 1: Let's say you're building Reddit. Only users that are either moderators or have reached a certain karma threshold 
+are allowed to upvote. */
+
+const karma = 143 
+const isModerator = true 
+
+// first use a ternary to set hasEnoughKarma to true if karma is above 100. If not, set it to false
+let hasEnoughKarma 
+hasEnoughKarma = karma > 100 ? true : false
+
+//  set the value of canUpvote with short-circuiting (using hasEnoughKarma and isModerator)
+let canUpvote 
+canUpvote = isModerator || hasEnoughKarma //will evaluate 1st operator as true and return the results and add to canUpvote
+canUpvote = hasEnoughKarma || isModerator //can switch operands and get same result. will evaluate 1st operator as true 
+console.log("canUpvote:", canUpvote) 
+
+/* Challenge 2: Let's say that only moderators who have enough karma are allowed to delete posts.  
+How would you set the canDelete variable */
+
+// set canDelete to true if both hasEnoughKarma and isModerator is true
+let canDelete 
+canDelete = hasEnoughKarma && isModerator //because 1st operand is true, && will skip and got to 2nd operand, return true and update canDelete with true
+console.log("canDelete:", canDelete) 
+
+// Challenge 3: what is the value of user? What if you switch the hasValidEmail variable to false? What if the response is empty?
+
+/*Solution: PartA: (response || "guest") will be evaluated 1st because of (). 1st operand response will be evaluated as truthy.
+|| stops at 1st truth/truthy, response will return JohnDoe and JohnDoe will be placed in user variable. 
+this will set the expression (response || "guest") to 'JohnDoe'. so const user = hasValidEmail && (response || "guest")
+has been changed to const user = hasValidEmail && "JohnDoe".
+
+hasValidEmail && response will be evaluated next. hasValidEmail will be evaluated as true, so && skips to response  
+response will be returned and JohnDoe added to user variable.
+
+PartB: 
+If hasValidEmail changes to false, (response || "guest") will still update user with true because response is truthy.
+hasValidEmail && response will be evaluated. hasValidEmail will be evaluated as false and && stops at 1st false. user will be updated
+with false.
+
+PartC: if response is empty (response || "guest") will be evaluated as falsy because of 1st operand is blank, || moves to 2nd operand and 
+returns guest and updates user with guest. 
+*/ 
+const response = "JohnDoe" 
+const hasValidEmail = true 
+const user = hasValidEmail && (response || "guest") 
+console.log("user: ", user) 
