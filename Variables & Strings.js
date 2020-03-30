@@ -5,7 +5,7 @@ var message = 'hello world again'
 There is a difference between these statements. 
 running the code for message (line1) will not return an error. a value called message was created but was not created as a variable (line2)
 message was added to the Global Object. The Global Object can be accessed anywhere within the application. The Global Object
-is different via the environment JavaScript runs in. In the browser, reference to Global Object is widow. Even though we can access message 
+is different via the environment JavaScript runs in. In the browser, reference to Global Object is window. Even though we can access message 
 like its a variable, it is not a variable. It is actually a property of the Global Object. This can be concerning/confusing if I created
 a variable called message. 
 */
@@ -56,7 +56,7 @@ are hoisted meaning we can access variable before they are created.
 
 variables let and const are not susceptible to the behavior of hoisting. let and const are not hoisted and stop program immediately 
 with errors. Use let when the variable will change. Use const when variable will not change. Const variables needs to be initialized 
-when created and cannot be changed. let variable do not need to initialized when created and can be changed. 
+when created and cannot be changed. let variable do not need to be initialized when created and can be changed. 
 
 let age; //declare variable age
 age = 26 //initialize it by giving its initial value
